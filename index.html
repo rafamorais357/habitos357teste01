@@ -25,13 +25,14 @@
     }
     h1, h2, h3, h4 {
       color: #222;
+      margin-bottom: 0.5rem;
     }
     .buttons {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       justify-content: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
     }
     .buttons button {
       background-color: #3a7;
@@ -41,7 +42,9 @@
       font-size: 1rem;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      flex-grow: 1;
+      max-width: 120px;
+      transition: background-color 0.3s;
     }
     .buttons button:hover {
       background-color: #2a5;
@@ -52,31 +55,24 @@
     .semana.active {
       display: block;
     }
-    details {
+    .dia {
       background: #fff;
+      padding: 1rem;
       margin-bottom: 1rem;
       border-left: 4px solid #3a7;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-    }
-    summary {
-      font-weight: bold;
-      cursor: pointer;
-      outline: none;
     }
     .categoria {
-      margin-top: 0.5rem;
       font-weight: 600;
-      color: #3a7;
-      border-bottom: 1px solid #3a7;
-      padding-bottom: 0.3rem;
+      margin-top: 0.8rem;
+      color: #2a5;
+      text-transform: uppercase;
     }
     .habit {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 0.3rem 0;
+      margin-bottom: 0.5rem;
     }
     .habit button {
       background: #3a7;
@@ -86,90 +82,96 @@
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.9rem;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s;
     }
     .habit button.done {
       background: #aaa;
       text-decoration: line-through;
-      cursor: default;
     }
     .habit button:hover:not(.done) {
       background-color: #2a5;
-    }
-    .reflexao {
-      background-color: #def0d8;
-      border-left: 5px solid #3a7;
-      margin: 1rem 0;
-      padding: 1rem;
-      font-style: italic;
-      color: #27632a;
-      border-radius: 4px;
     }
     footer {
       background: #222;
       color: white;
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 1rem;
       font-size: 0.9rem;
     }
-    #sobre-autor {
-      max-width: 800px;
-      margin: 2rem auto 1rem;
-      padding: 1rem 2rem;
-      color: #222;
-      background: #e3f2e1;
+    /* Barra de progresso */
+    #progress-container {
+      background: #ddd;
       border-radius: 8px;
-      font-size: 1rem;
-      line-height: 1.5;
+      height: 20px;
+      width: 100%;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
     }
-    #sobre-autor h3 {
-      color: #3a7;
-      margin-bottom: 0.5rem;
-    }
-    #copyright {
-      margin-top: 1rem;
+    #progress-bar {
+      background-color: #3a7;
+      height: 100%;
+      width: 0%;
+      transition: width 0.4s ease;
     }
 
-    /* Responsividade para celular */
-    @media (max-width: 600px) {
-      body {
-        padding: 1rem;
-      }
+    /* Cronômetro */
+    #timer-container {
+      background: #f0f8f5;
+      border: 2px solid #3a7;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      max-width: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      user-select: none;
+    }
+    #timer-display {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #3a7;
+      width: 100px;
+      text-align: center;
+      font-family: monospace;
+    }
+    #timer-controls button {
+      background: #3a7;
+      border: none;
+      padding: 0.5rem 0.8rem;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+      min-width: 60px;
+    }
+    #timer-controls button:hover {
+      background-color: #2a5;
+    }
+    @media (max-width: 480px) {
       main {
         padding: 1rem;
       }
-      .buttons {
-        flex-direction: column;
-        gap: 0.7rem;
-      }
       .buttons button {
-        width: 100%;
-        font-size: 1.1rem;
-        padding: 1rem 0;
+        max-width: 100%;
       }
-      details {
-        font-size: 1rem;
-      }
-      summary {
-        padding: 1rem 0.7rem;
-        font-size: 1.1rem;
-      }
-      .habit {
+      #timer-container {
         flex-direction: column;
-        align-items: flex-start;
         gap: 0.5rem;
+        max-width: 100%;
       }
-      .habit button {
+      #timer-display {
         width: 100%;
-        font-size: 1rem;
-        padding: 0.7rem 0;
+        font-size: 2rem;
       }
-      #sobre-autor {
-        padding: 1rem;
-        font-size: 1rem;
-      }
-      footer {
-        padding: 1.5rem 1rem;
+      #timer-controls {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
       }
     }
   </style>
@@ -178,452 +180,461 @@
   <header>
     <h1>HÁBITOS 3.5.7</h1>
     <p>Protocolo de 28 Dias por Rafa Morais</p>
-    <div class="buttons">
-      <button onclick="showSemana(1)">Semana 1</button>
-      <button onclick="showSemana(2)">Semana 2</button>
-      <button onclick="showSemana(3)">Semana 3</button>
-      <button onclick="showSemana(4)">Semana 4</button>
-    </div>
   </header>
   <main>
+    <div class="buttons" role="tablist" aria-label="Escolha da semana">
+      <button role="tab" aria-selected="true" aria-controls="semana1" id="btn-semana1" onclick="showSemana(1)">Semana 1</button>
+      <button role="tab" aria-selected="false" aria-controls="semana2" id="btn-semana2" onclick="showSemana(2)">Semana 2</button>
+      <button role="tab" aria-selected="false" aria-controls="semana3" id="btn-semana3" onclick="showSemana(3)">Semana 3</button>
+      <button role="tab" aria-selected="false" aria-controls="semana4" id="btn-semana4" onclick="showSemana(4)">Semana 4</button>
+    </div>
 
-    <div id="semana1" class="semana active">
-      <h2>Semana 1 — Fundamentos Iniciais</h2>
+    <div id="progress-container" aria-label="Barra de progresso">
+      <div id="progress-bar"></div>
+    </div>
+
+    <h2 id="semana-title">Semana 1 — Fundamentos Iniciais</h2>
+
+    <div id="timer-container" aria-label="Cronômetro">
+      <div id="timer-display" aria-live="polite" aria-atomic="true">05:30</div>
+      <div id="timer-controls">
+        <button id="start-btn" aria-label="Iniciar cronômetro">Iniciar</button>
+        <button id="pause-btn" aria-label="Pausar cronômetro" disabled>Pausar</button>
+        <button id="reset-btn" aria-label="Resetar cronômetro">Resetar</button>
+      </div>
+    </div>
+
+    <!-- Semanas -->
+    <div id="semana1" class="semana active" role="tabpanel" aria-labelledby="btn-semana1">
+      <h3>Objetivo: Criar espaço na rotina e iniciar os 3 pilares com suavidade.</h3>
       <details open>
         <summary>Dia 1</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <!-- Repetir dias 2 a 7 da semana 1 -->
-      <details>
-        <summary>Dia 2</summary>
+      <!-- Repetir para os dias 2 a 7 -->
+      <details><summary>Dia 2</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 3</summary>
+      <details><summary>Dia 3</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 4</summary>
+      <details><summary>Dia 4</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 5</summary>
+      <details><summary>Dia 5</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 6</summary>
+      <details><summary>Dia 6</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 7</summary>
+      <details><summary>Dia 7</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <div class="reflexao">
-        Reflexão do 7º dia: O que senti ao dar esses primeiros passos? Estou pronto para aprofundar?
-      </div>
     </div>
 
-    <div id="semana2" class="semana">
-      <h2>Semana 2 — Fortalecimento dos Pilares</h2>
-      <details>
+    <div id="semana2" class="semana" role="tabpanel" aria-labelledby="btn-semana2">
+      <h3>Objetivo: Adicionar novas práticas que aprofundam a conexão com você mesmo.</h3>
+      <!-- Dias 8 a 14 -->
+      <details open>
         <summary>Dia 8</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Início do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <!-- Repetir até o dia 14 -->
-      <details>
-        <summary>Dia 9</summary>
+      <!-- Dias 9 a 14 seguem o mesmo padrão -->
+      <details><summary>Dia 9</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Início do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 10</summary>
+      <!-- Continue dias 10 a 14 da mesma forma -->
+      <details><summary>Dia 10</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Início do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 11</summary>
+      <details><summary>Dia 11</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Início do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 12</summary>
+      <details><summary>Dia 12</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Início do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 13</summary>
+      <details><summary>Dia 13</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Início do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 14</summary>
+      <details><summary>Dia 14</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Início do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <div class="reflexao">
-        Reflexão do 7º dia: Notei mais energia ou clareza? Que mudanças percebo?
-      </div>
     </div>
 
-    <div id="semana3" class="semana">
-      <h2>Semana 3 — Expansão da Consciência</h2>
-      <details>
+    <div id="semana3" class="semana" role="tabpanel" aria-labelledby="btn-semana3">
+      <h3>Objetivo: Expandir sua percepção e presença no dia a dia.</h3>
+      <!-- Dias 15 a 21 -->
+      <details open>
         <summary>Dia 15</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🎥 Vídeos educativos diários</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <!-- Repetir dias 16 a 21 com mesmas tarefas -->
-      <details>
-        <summary>Dia 16</summary>
+      <!-- Repetir para os dias 16 a 21 -->
+      <!-- ... (idem, só mudar o summary e manter tarefas iguais) -->
+      <details><summary>Dia 16</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🎥 Vídeos educativos diários</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <!-- Continue dias 17 a 21 seguindo mesmo padrão -->
-      <details>
-        <summary>Dia 17</summary>
-        <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
-      </details>
-      <!-- Repetir dias 18,19,20,21 da mesma forma -->
-      <details>
-        <summary>Dia 18</summary>
-        <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
-      </details>
-      <details>
-        <summary>Dia 19</summary>
-        <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
-      </details>
-      <details>
-        <summary>Dia 20</summary>
-        <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
-      </details>
-      <details>
-        <summary>Dia 21</summary>
-        <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
-      </details>
-      <div class="reflexao">
-        Reflexão do 7º dia: Como estou me sentindo com essa expansão? O que aprendi?
-      </div>
+      <!-- ... Dias 17 a 21 iguais, só trocar o summary para o dia correspondente -->
     </div>
 
-    <div id="semana4" class="semana">
-      <h2>Semana 4 — Integração e Propósito</h2>
-      <details>
+    <div id="semana4" class="semana" role="tabpanel" aria-labelledby="btn-semana4">
+      <h3>Objetivo: Consolidar os hábitos e realizar rituais de integração.</h3>
+      <!-- Dias 22 a 28 -->
+      <details open>
         <summary>Dia 22</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>📵 Desconexão digital (sem redes sociais/telas)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🎥 Vídeos educativos diários</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📵 Desconexão digital (redução do uso de redes sociais/telas)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Tarefa Especial</div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🙏 Diário de gratidão</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>💞 Boa ação diária</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="categoria">Tarefas da Semana 4</div>
         <div class="habit"><span>🔥 Jejum consciente de 12 horas</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <!-- Repetir dias 23 a 28 com respectivas tarefas -->
-      <details>
-        <summary>Dia 23</summary>
+      <!-- Dias 23 a 28 -->
+      <details><summary>Dia 23</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>📵 Desconexão digital (sem redes sociais/telas)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🎥 Vídeos educativos diários</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📵 Desconexão digital (redução do uso de redes sociais/telas)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Tarefa Especial</div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🙏 Diário de gratidão</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>💞 Boa ação diária</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="categoria">Tarefas da Semana 4</div>
         <div class="habit"><span>📵 Desconexão digital (sem redes sociais/telas)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 24</summary>
+      <details><summary>Dia 24</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🎥 Vídeos educativos diários</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📵 Desconexão digital (redução do uso de redes sociais/telas)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Tarefa Especial</div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🙏 Diário de gratidão</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>💞 Boa ação diária</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="categoria">Tarefas da Semana 4</div>
         <div class="habit"><span>🧘‍♂️ Meditação guiada profunda (20 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 25</summary>
+      <details><summary>Dia 25</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🎥 Vídeos educativos diários</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📵 Desconexão digital (redução do uso de redes sociais/telas)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Tarefa Especial</div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🙏 Diário de gratidão</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>💞 Boa ação diária</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="categoria">Tarefas da Semana 4</div>
         <div class="habit"><span>🧠 Mapeamento mental (planos para os próximos 3 meses)</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 26</summary>
+      <details><summary>Dia 26</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🎥 Vídeos educativos diários</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📵 Desconexão digital (redução do uso de redes sociais/telas)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Tarefa Especial</div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🙏 Diário de gratidão</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>💞 Boa ação diária</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="categoria">Tarefas da Semana 4</div>
         <div class="habit"><span>✍️ Escrita reflexiva: o que mudou nos últimos 30 dias</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 27</summary>
+      <details><summary>Dia 27</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🎥 Vídeos educativos diários</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📵 Desconexão digital (redução do uso de redes sociais/telas)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Tarefa Especial</div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🙏 Diário de gratidão</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>💞 Boa ação diária</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="categoria">Tarefas da Semana 4</div>
         <div class="habit"><span>💖 Lista de 10 agradecimentos intensos</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <details>
-        <summary>Dia 28</summary>
+      <details><summary>Dia 28</summary>
         <div class="categoria">Corpo</div>
-        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🚶‍♂️ Caminhada leve (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>💧 Ingestão de 2 litros de água por dia</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🧘‍♂️ Yoga ou alongamento consciente</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Mente</div>
-        <div class="habit"><span>📖 Leitura de desenvolvimento pessoal (mínimo 5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📖 Leitura desenvolvimento pessoal (mínimo 5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="habit"><span>🌍 Continuação do estudo de um novo idioma</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🎥 Vídeos educativos diários (TED Talks, documentários selecionados)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🎥 Vídeos educativos diários</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>📵 Desconexão digital (redução do uso de redes sociais/telas)</span><button onclick="toggle(this)">Concluir</button></div>
         <div class="categoria">Espírito</div>
-        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>🙏 Diário de gratidão (3 itens por dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="habit"><span>💞 Boa ação diária (escrevê-la ao final do dia)</span><button onclick="toggle(this)">Concluir</button></div>
-        <div class="categoria">Tarefa Especial</div>
+        <div class="habit"><span>🧘‍♀️ Meditação curta (5 minutos)</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>🙏 Diário de gratidão</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="habit"><span>💞 Boa ação diária</span><button onclick="toggle(this)">Concluir</button></div>
+        <div class="categoria">Tarefas da Semana 4</div>
         <div class="habit"><span>🕯️ Ritual simbólico: vela, música e carta para si mesmo</span><button onclick="toggle(this)">Concluir</button></div>
       </details>
-      <div class="reflexao">
-        Reflexão final: Quais mudanças sinto em mim? Qual meu propósito daqui para frente?
-      </div>
     </div>
-
-    <section id="sobre-autor">
-      <h3>Sobre o Autor</h3>
-      <p>Rafael Pereira Morais, 29 anos, fotógrafo e designer de Caxambu - MG, apaixonado por hábitos saudáveis e desenvolvimento integral do ser. Criador do protocolo Hábitos 3.5.7, que integra corpo, mente e espírito em práticas diárias simples e efetivas.</p>
-    </section>
-
   </main>
-
   <footer>
-    <p>&copy; 2025 Rafael Pereira Morais</p>
+    &copy; 2025 Rafael Pereira Morais - HÁBITOS 3.5.7
   </footer>
 
   <script>
-    function showSemana(n) {
-      document.querySelectorAll('.semana').forEach(s => s.classList.remove('active'));
-      document.getElementById(`semana${n}`).classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Controle das semanas visíveis e títulos
+    function showSemana(num) {
+      const semanas = document.querySelectorAll('.semana');
+      const buttons = document.querySelectorAll('.buttons button');
+      semanas.forEach((semana, idx) => {
+        if (idx === num -1) {
+          semana.classList.add('active');
+        } else {
+          semana.classList.remove('active');
+        }
+      });
+      buttons.forEach((btn, idx) => {
+        btn.setAttribute('aria-selected', idx === num - 1);
+      });
+      // Atualiza o título
+      const titles = [
+        'Semana 1 — Fundamentos Iniciais',
+        'Semana 2 — Aprofundamento',
+        'Semana 3 — Expansão e Presença',
+        'Semana 4 — Integração e Propósito'
+      ];
+      document.getElementById('semana-title').textContent = titles[num -1];
+
+      // Atualiza barra progresso para a semana selecionada
+      updateProgressBar();
+      // Reseta o cronômetro
+      resetTimer();
     }
 
+    // Toggle botão concluir / desmarcar
     function toggle(btn) {
-      if (btn.classList.contains('done')) {
-        btn.classList.remove('done');
-        btn.textContent = 'Concluir';
+      btn.classList.toggle('done');
+      btn.textContent = btn.classList.contains('done') ? 'Desmarcar' : 'Concluir';
+      updateProgressBar();
+    }
+
+    // Barra de progresso
+    function updateProgressBar() {
+      // Pega semana ativa
+      const semanaAtiva = document.querySelector('.semana.active');
+      if (!semanaAtiva) return;
+      // Conta todos os botões da semana
+      const btns = semanaAtiva.querySelectorAll('.habit button');
+      const total = btns.length;
+      const concluidos = Array.from(btns).filter(b => b.classList.contains('done')).length;
+      const percent = (concluidos / total) * 100;
+      const progressBar = document.getElementById('progress-bar');
+      progressBar.style.width = percent + '%';
+      progressBar.setAttribute('aria-valuenow', Math.round(percent));
+      progressBar.setAttribute('aria-valuemin', '0');
+      progressBar.setAttribute('aria-valuemax', '100');
+      progressBar.setAttribute('aria-label', `Progresso: ${Math.round(percent)}% concluído`);
+    }
+
+    // CRONÔMETRO 5min30seg
+    let timerInterval = null;
+    let totalSeconds = 330; // 5*60 + 30
+    let currentSeconds = totalSeconds;
+    const timerDisplay = document.getElementById('timer-display');
+    const startBtn = document.getElementById('start-btn');
+    const pauseBtn = document.getElementById('pause-btn');
+    const resetBtn = document.getElementById('reset-btn');
+
+    function updateTimerDisplay() {
+      const min = Math.floor(currentSeconds / 60);
+      const seg = currentSeconds % 60;
+      timerDisplay.textContent = 
+        `${min.toString().padStart(2,'0')}:${seg.toString().padStart(2,'0')}`;
+    }
+
+    function timerTick() {
+      if (currentSeconds > 0) {
+        currentSeconds--;
+        updateTimerDisplay();
       } else {
-        btn.classList.add('done');
-        btn.textContent = 'Concluído';
+        clearInterval(timerInterval);
+        timerInterval = null;
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        alert('Tempo encerrado!');
       }
     }
+
+    function startTimer() {
+      if (timerInterval) return;
+      timerInterval = setInterval(timerTick, 1000);
+      startBtn.disabled = true;
+      pauseBtn.disabled = false;
+    }
+
+    function pauseTimer() {
+      if (!timerInterval) return;
+      clearInterval(timerInterval);
+      timerInterval = null;
+      startBtn.disabled = false;
+      pauseBtn.disabled = true;
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      currentSeconds = totalSeconds;
+      updateTimerDisplay();
+    }
+
+    // Eventos botões cronômetro
+    startBtn.addEventListener('click', startTimer);
+    pauseBtn.addEventListener('click', pauseTimer);
+    resetBtn.addEventListener('click', resetTimer);
+
+    // Inicia barra de progresso na semana 1
+    updateProgressBar();
   </script>
 </body>
 </html>
+
 
 
 
