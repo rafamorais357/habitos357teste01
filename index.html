@@ -429,7 +429,106 @@
 
   <script>
     // Função para alternar botão concluir
-    function toggle
+    function toggle(btn) {
+      if (btn.classList.contains('done')) {
+        btn.classList.remove('done');
+        btn.textContent = 'Concluir';
+      } else {
+        btn.classList.add('done');
+        btn.textContent = 'Concluído';
+      }
+    }
+
+    // Gerar dias para as semanas a partir dos templates
+    function gerarDiasSemana(semanaNum, dias, templateId) {
+      const container = document.getElementById('diasSemana' + semanaNum);
+      const template = document.getElementById(templateId);
+      for(let i=1; i<=dias; i++) {
+        const clone = template.content.cloneNode(true);
+        const details = clone.querySelector('details');
+        const summary = details.querySelector('summary');
+        summary.textContent = `Dia ${String(i).padStart(2,'0')}`;
+
+        // Se for semana 4, dias começam em 22
+        if (semanaNum === 4) {
+          summary.textContent = `Dia ${22 + i -1}`;
+        }
+
+        container.appendChild(clone);
+      }
+    }
+
+    // Mostrar a semana selecionada
+    function showSemana(num) {
+      for(let i=1; i<=4; i++) {
+        const semana = document.getElementById('semana' + i);
+        const btn = document.getElementById('btnSemana' + i);
+        if(i === num) {
+          semana.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+          semana.focus();
+        } else {
+          semana.classList.remove('active');
+          btn.setAttribute('aria-selected', 'false');
+        }
+      }
+    }
+
+    // Iniciar dias
+    gerarDiasSemana(1, 7, 'templateSemana1');
+    gerarDiasSemana(2, 7, 'templateSemana2');
+    gerarDiasSemana(3, 7, 'templateSemana3');
+    gerarDiasSemana(4, 7, 'templateSemana4');
+
+    // Cronômetro
+    const timerDisplay = document.getElementById('timer-display');
+    const btnStart = document.getElementById('btn-start');
+    const totalSeconds = 5 * 60 + 30;
+    let currentSeconds = totalSeconds;
+    let timerInterval = null;
+
+    function updateTimerDisplay() {
+      const min = Math.floor(currentSeconds / 60);
+      const seg = currentSeconds % 60;
+      timerDisplay.textContent =
+        `${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+    }
+
+    function timerTick() {
+      if (currentSeconds > 0) {
+        currentSeconds--;
+        updateTimerDisplay();
+      } else {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        alert('Tempo encerrado!');
+        btnStart.disabled = false;
+        btnStart.textContent = 'Start';
+        btnStart.setAttribute('aria-pressed', 'false');
+        currentSeconds = totalSeconds; // reinicia para próxima vez
+        updateTimerDisplay();
+      }
+    }
+
+    btnStart.onclick = function () {
+      if (!timerInterval) {
+        timerInterval = setInterval(timerTick, 1000);
+        btnStart.textContent = 'Pausar';
+        btnStart.setAttribute('aria-pressed', 'true');
+      } else {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        btnStart.textContent = 'Start';
+        btnStart.setAttribute('aria-pressed', 'false');
+      }
+    };
+
+    updateTimerDisplay();
+  </script>
+
+</body>
+</html>
+
 
 
 
