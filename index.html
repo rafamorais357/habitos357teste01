@@ -8,8 +8,8 @@
   body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     max-width: 720px;
-    margin: 20px auto;
-    padding: 0 20px 40px;
+    margin: 20px auto 50px;
+    padding: 0 20px;
     background: #f0f4f8;
     color: #222;
     line-height: 1.5;
@@ -19,106 +19,41 @@
     margin-bottom: 18px;
     font-weight: 700;
     color: #2c3e50;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
   }
-  .progress-bar {
-    background: #ddd;
-    border-radius: 20px;
-    overflow: hidden;
-    height: 18px;
-    margin: 12px 0 24px 0;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-  }
-  .progress-bar-fill {
-    background: linear-gradient(90deg, #4caf50 0%, #81c784 100%);
-    height: 100%;
-    width: 0;
-    border-radius: 20px;
-    transition: width 0.4s ease;
-    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
-  }
-  .week-container {
-    margin-bottom: 30px;
-    padding: 20px 25px;
-    background: white;
-    border-radius: 14px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    transition: box-shadow 0.3s ease;
-  }
-  .week-container:hover {
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  }
-  .week-title {
-    font-weight: 700;
-    margin-bottom: 16px;
-    font-size: 1.3rem;
-    color: #34495e;
-    border-bottom: 2px solid #4caf50;
-    padding-bottom: 6px;
-  }
-  .day-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-  }
-  .day-item:last-child {
-    border-bottom: none;
-  }
-  .day-label {
-    flex: 1;
-    font-size: 1.05rem;
-    cursor: pointer;
-    user-select: none;
-    color: #2c3e50;
-  }
-  input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 24px;
-    height: 24px;
-    border: 2.8px solid #4caf50;
-    border-radius: 6px;
-    margin-left: 12px;
-    position: relative;
-    cursor: pointer;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-  }
-  input[type="checkbox"]:checked {
-    background-color: #4caf50;
-    border-color: #388e3c;
-  }
-  input[type="checkbox"]:checked::after {
-    content: "✔";
-    font-size: 18px;
-    color: white;
-    position: absolute;
-    top: 1px;
-    left: 4px;
-  }
-  .habit-name {
-    font-weight: 600;
-    color: #2e4057;
-    margin-left: 6px;
-    font-style: italic;
-  }
-  footer {
+  .button-group {
     text-align: center;
-    margin: 50px 0 10px;
-    font-size: 0.95rem;
-    color: #666;
-    font-style: italic;
+    margin-bottom: 28px;
+  }
+  .button-group button {
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 10px 20px;
+    margin: 0 8px 8px 8px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: #4caf50;
+    color: white;
+    box-shadow: 0 4px 8px rgba(76,175,80,0.4);
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  .button-group button:hover {
+    background-color: #388e3c;
+  }
+  .button-group button.active {
+    background-color: #2e7d32;
+    box-shadow: 0 6px 12px rgba(46,125,50,0.6);
   }
 
-  /* Cronômetro */
   #timer {
-    font-size: 2.8rem;
+    font-size: 3rem;
     font-weight: 700;
     text-align: center;
-    margin: 15px 0 20px 0;
-    user-select: none;
+    margin: 15px 0 25px 0;
     color: #2e7d32;
     text-shadow: 1px 1px 4px rgba(46,125,50,0.6);
+    user-select: none;
   }
   #timer-controls {
     text-align: center;
@@ -145,13 +80,136 @@
   #timer-controls button:active {
     transform: scale(0.95);
   }
+
+  .week-progress-bar {
+    background: #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 18px;
+    margin: 16px 0 30px 0;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .week-progress-fill {
+    background: linear-gradient(90deg, #4caf50 0%, #81c784 100%);
+    height: 100%;
+    width: 0;
+    border-radius: 20px;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+  }
+
+  .days-container {
+    background: white;
+    border-radius: 14px;
+    padding: 20px 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin-bottom: 40px;
+  }
+  .day-block {
+    margin-bottom: 24px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 18px;
+  }
+  .day-block:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .day-title {
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 14px;
+    color: #34495e;
+    border-left: 6px solid #4caf50;
+    padding-left: 12px;
+    user-select: none;
+  }
+  .pilares-container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .pilar-card {
+    flex: 1 1 30%;
+    background: #f9fdfa;
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: 0 3px 10px rgba(76,175,80,0.15);
+    user-select: none;
+  }
+  .pilar-card h3 {
+    text-transform: capitalize;
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    color: #2c3e50;
+  }
+  .pilar-task {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #2e4057;
+  }
+  .pilar-task input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2.8px solid #4caf50;
+    border-radius: 6px;
+    margin-right: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  .pilar-task input[type="checkbox"]:checked {
+    background-color: #4caf50;
+    border-color: #388e3c;
+  }
+  .pilar-task input[type="checkbox"]:checked::after {
+    content: "✔";
+    font-size: 18px;
+    color: white;
+    position: absolute;
+    top: 1px;
+    left: 5px;
+  }
+  .pilar-task label {
+    flex: 1;
+    cursor: pointer;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 0.95rem;
+    color: #666;
+    font-style: italic;
+    user-select: none;
+  }
+
+  /* Responsivo */
+  @media(max-width: 720px) {
+    .pilares-container {
+      flex-direction: column;
+    }
+    .pilar-card {
+      flex-basis: 100%;
+    }
+  }
 </style>
 </head>
 <body>
   <h1>HÁBITOS 3.5.7 - Protocolo de 28 Dias</h1>
 
+  <div class="button-group" role="tablist" aria-label="Selecionar semana">
+    <button class="active" role="tab" aria-selected="true" aria-controls="semanaConteudo" id="btn-semana1">Semana 1</button>
+    <button role="tab" aria-selected="false" aria-controls="semanaConteudo" id="btn-semana2">Semana 2</button>
+    <button role="tab" aria-selected="false" aria-controls="semanaConteudo" id="btn-semana3">Semana 3</button>
+    <button role="tab" aria-selected="false" aria-controls="semanaConteudo" id="btn-semana4">Semana 4</button>
+  </div>
+
   <!-- Cronômetro -->
-  <div id="timer">05:30</div>
+  <div id="timer" aria-live="polite" aria-atomic="true">05:30</div>
   <div id="timer-controls">
     <button id="startBtn">Iniciar</button>
     <button id="pauseBtn">Pausar</button>
@@ -159,212 +217,262 @@
   </div>
 
   <div>
-    <div><strong>Progresso Geral:</strong></div>
-    <div class="progress-bar" aria-label="Progresso geral do protocolo">
-      <div id="overallProgress" class="progress-bar-fill"></div>
+    <div><strong>Progresso da Semana:</strong></div>
+    <div class="week-progress-bar" aria-label="Progresso da semana">
+      <div id="weekProgress" class="week-progress-fill"></div>
     </div>
   </div>
 
-  <div id="weeksContainer"></div>
+  <div id="semanaConteudo" class="days-container" role="tabpanel" tabindex="0" aria-live="polite" aria-atomic="true"></div>
 
   <footer>
     Desenvolvido para o método HÁBITOS 3.5.7 por Rafa Morais
   </footer>
 
 <script>
-  // Sons em base64 para simplicidade
-  const beepShort = new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQgAAA=="); // som curto vazio (pode trocar por um beep mais realista)
-  const beepEnd = new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQgAAA=="); // usar o mesmo por enquanto, pode trocar
+  // Dados dos hábitos: para cada semana, cada dia tem 3 pilares
+  // Mantive os hábitos conforme seu texto, separando os dias para cada semana
 
-  function playSound(audio) {
-    audio.currentTime = 0;
-    audio.play().catch(() => {/* bloqueio por navegador sem interação */});
+  const habitosPorSemana = {
+    semana1: [
+      { corpo: "Caminhada leve (5 minutos)", mente: "Leitura de desenvolvimento pessoal (5 minutos)", espirito: "Meditação curta (5 minutos)" },
+      { corpo: "Caminhada leve (5 minutos)", mente: "Leitura de desenvolvimento pessoal (5 minutos)", espirito: "Meditação curta (5 minutos)" },
+      { corpo: "Caminhada leve (5 minutos)", mente: "Leitura de desenvolvimento pessoal (5 minutos)", espirito: "Meditação curta (5 minutos)" },
+      { corpo: "Caminhada leve (5 minutos)", mente: "Leitura de desenvolvimento pessoal (5 minutos)", espirito: "Meditação curta (5 minutos)" },
+      { corpo: "Caminhada leve (5 minutos)", mente: "Leitura de desenvolvimento pessoal (5 minutos)", espirito: "Meditação curta (5 minutos)" },
+      { corpo: "Caminhada leve (5 minutos)", mente: "Leitura de desenvolvimento pessoal (5 minutos)", espirito: "Meditação curta (5 minutos)" },
+      { corpo: "Reflexão: O que senti ao dar esses primeiros passos?", mente: "Reflexão: O que senti ao dar esses primeiros passos?", espirito: "Reflexão: O que senti ao dar esses primeiros passos?" },
+    ],
+    semana2: [
+      { corpo: "Caminhada leve (5 minutos)", mente: "Leitura de desenvolvimento pessoal", espirito: "Meditação curta" },
+      { corpo: "Ingestão de 2 litros de água", mente: "Estudo de um novo idioma", espirito: "Diário de gratidão (3 itens)" },
+      { corpo: "Caminhada leve (5 minutos)", mente: "Leitura de desenvolvimento pessoal", espirito: "Meditação curta" },
+      { corpo: "Ingestão de 2 litros de água", mente: "Estudo de um novo idioma", espirito: "Diário de gratidão (3 itens)" },
+      { corpo: "Caminhada leve (5 minutos)", mente: "Leitura de desenvolvimento pessoal", espirito: "Meditação curta" },
+      { corpo: "Ingestão de 2 litros de água", mente: "Estudo de um novo idioma", espirito: "Diário de gratidão (3 itens)" },
+      { corpo: "Reflexão: Notei mais energia ou clareza?", mente: "Reflexão: Notei mais energia ou clareza?", espirito: "Reflexão: Notei mais energia ou clareza?" },
+    ],
+    semana3: [
+      { corpo: "Caminhada leve (5 minutos)", mente: "Leitura de desenvolvimento pessoal", espirito: "Meditação curta" },
+      { corpo: "Ingestão de 2 litros de água", mente: "Estudo de um novo idioma", espirito: "Diário de gratidão (3 itens)" },
+      { corpo: "Yoga ou alongamento consciente", mente: "Vídeos educativos diários", espirito: "Boa ação diária" },
+      { corpo: "Caminhada leve (5 minutos)", mente: "Leitura de desenvolvimento pessoal", espirito: "Meditação curta" },
+      { corpo: "Ingestão de 2 litros de água", mente: "Estudo de um novo idioma", espirito: "Diário de gratidão (3 itens)" },
+      { corpo: "Yoga ou alongamento consciente", mente: "Vídeos educativos diários", espirito: "Boa ação diária" },
+      { corpo: "Reflexão: Como estou me sentindo com essa expansão?", mente: "Reflexão: Como estou me sentindo com essa expansão?", espirito: "Reflexão: Como estou me sentindo com essa expansão?" },
+    ],
+    semana4: [
+      { corpo: "Caminhada leve (5 minutos)", mente: "Leitura de desenvolvimento pessoal", espirito: "Meditação curta" },
+      { corpo: "Ingestão de 2 litros de água", mente: "Estudo de um novo idioma", espirito: "Diário de gratidão" },
+      { corpo: "Yoga ou alongamento consciente", mente: "Vídeos educativos diários", espirito: "Boa ação diária" },
+      { corpo: "Jejum consciente de 12 horas", mente: "Desconexão digital (sem redes sociais/telas)", espirito: "Meditação guiada profunda (20 minutos)" },
+      { corpo: "Mapeamento mental (planos para os próximos 3 meses)", mente: "Escrita reflexiva: o que mudou nos últimos 30 dias", espirito: "Lista de 10 agradecimentos intensos" },
+      { corpo: "Ritual simbólico: vela, música e carta para si mesmo", mente: "Desconexão digital", espirito: "Boa ação diária" },
+      { corpo: "Reflexão: Que parte de mim despertei neste ciclo?", mente: "Reflexão: Que parte de mim despertei neste ciclo?", espirito: "Reflexão: Que parte de mim despertei neste ciclo?" },
+    ],
+  };
+
+  const btnSemana1 = document.getElementById('btn-semana1');
+  const btnSemana2 = document.getElementById('btn-semana2');
+  const btnSemana3 = document.getElementById('btn-semana3');
+  const btnSemana4 = document.getElementById('btn-semana4');
+  const semanaConteudo = document.getElementById('semanaConteudo');
+
+  const semanaBtns = [btnSemana1, btnSemana2, btnSemana3, btnSemana4];
+  let semanaAtual = 'semana1';
+
+  function marcarSemanaAtiva(semana) {
+    semanaAtual = semana;
+    semanaBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.id === 'btn-' + semana);
+      btn.setAttribute('aria-selected', btn.classList.contains('active') ? 'true' : 'false');
+      btn.tabIndex = btn.classList.contains('active') ? 0 : -1;
+    });
   }
 
-  // Lista dos 28 hábitos conforme método
-  const habits = [
-    // Dias 1 a 7 — Semana 1
-    "Caminhada leve (5 minutos)",
-    "Leitura de desenvolvimento pessoal (5 minutos)",
-    "Meditação curta (5 minutos)",
-    "Caminhada leve (5 minutos)",
-    "Leitura de desenvolvimento pessoal (5 minutos)",
-    "Meditação curta (5 minutos)",
-    "Reflexão: O que senti ao dar esses primeiros passos?",
+  function criarCheckbox(day, pilar) {
+    const id = `chk-${semanaAtual}-${day}-${pilar}`;
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.id = id;
+    checkbox.dataset.day = day;
+    checkbox.dataset.pilar = pilar;
 
-    // Dias 8 a 14 — Semana 2
-    "Caminhada leve (5 minutos)",
-    "Ingestão de 2 litros de água",
-    "Leitura de desenvolvimento pessoal (5 minutos)",
-    "Início do estudo de um novo idioma",
-    "Meditação curta (5 minutos)",
-    "Diário de gratidão (3 itens)",
-    "Reflexão: Notei mais energia ou clareza?",
+    // Carregar estado salvo
+    const saved = localStorage.getItem(id);
+    if (saved === 'true') checkbox.checked = true;
 
-    // Dias 15 a 21 — Semana 3
-    "Caminhada leve (5 minutos)",
-    "Ingestão de 2 litros de água",
-    "Prática de Yoga (5 minutos)",
-    "Leitura de desenvolvimento pessoal (5 minutos)",
-    "Continuação do estudo de um novo idioma",
-    "Vídeos educativos diários",
-    "Meditação curta (5 minutos)",
+    checkbox.addEventListener('change', () => {
+      localStorage.setItem(id, checkbox.checked);
+      atualizarProgresso();
+    });
+    return checkbox;
+  }
 
-    // Dias 22 a 28 — Semana 4
-    "Jejum consciente de 12 horas",
-    "Desconexão digital (sem redes sociais/telas)",
-    "Meditação guiada profunda (20 minutos)",
-    "Mapeamento mental (planos para os próximos 3 meses)",
-    "Escrita reflexiva: o que mudou nos últimos 30 dias",
-    "Lista de 10 agradecimentos intensos",
-    "Ritual simbólico: vela, música e carta para si mesmo"
-  ];
+  function renderizarSemana() {
+    semanaConteudo.innerHTML = '';
+    const dias = habitosPorSemana[semanaAtual];
+    dias.forEach((tarefas, index) => {
+      const dayBlock = document.createElement('div');
+      dayBlock.className = 'day-block';
 
-  const TOTAL_DAYS = 28;
-  const DAYS_PER_WEEK = 7;
-  const TOTAL_WEEKS = TOTAL_DAYS / DAYS_PER_WEEK;
+      const dayTitle = document.createElement('div');
+      dayTitle.className = 'day-title';
+      dayTitle.textContent = `Dia ${index + 1}`;
+      dayBlock.appendChild(dayTitle);
 
-  const weeksContainer = document.getElementById('weeksContainer');
+      const pilaresContainer = document.createElement('div');
+      pilaresContainer.className = 'pilares-container';
 
-  function createWeekHtml(weekNumber) {
-    const startDay = (weekNumber - 1) * DAYS_PER_WEEK;
-    const endDay = startDay + DAYS_PER_WEEK;
+      ['corpo', 'mente', 'espirito'].forEach(pilar => {
+        const card = document.createElement('div');
+        card.className = 'pilar-card';
 
-    const weekDiv = document.createElement('div');
-    weekDiv.classList.add('week-container');
+        const titulo = document.createElement('h3');
+        titulo.textContent = pilar;
+        card.appendChild(titulo);
 
-    const weekTitle = document.createElement('div');
-    weekTitle.classList.add('week-title');
-    weekTitle.textContent = `Semana ${weekNumber}`;
-    weekDiv.appendChild(weekTitle);
+        const tarefaDiv = document.createElement('div');
+        tarefaDiv.className = 'pilar-task';
 
-    for(let day = startDay; day < endDay; day++) {
-      const dayItem = document.createElement('div');
-      dayItem.classList.add('day-item');
+        const checkbox = criarCheckbox(index + 1, pilar);
+        const label = document.createElement('label');
+        label.htmlFor = checkbox.id;
+        label.textContent = tarefas[pilar];
 
-      const label = document.createElement('label');
-      label.classList.add('day-label');
-      label.htmlFor = `day-${day+1}`;
+        tarefaDiv.appendChild(checkbox);
+        tarefaDiv.appendChild(label);
 
-      label.innerHTML = `<strong>Dia ${day+1}:</strong> <span class="habit-name">${habits[day]}</span>`;
-
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.id = `day-${day+1}`;
-      checkbox.dataset.day = day+1;
-
-      // Recupera estado do localStorage
-      const saved = localStorage.getItem(`habit_day_${day+1}`);
-      if(saved === 'true') {
-        checkbox.checked = true;
-      }
-
-      checkbox.addEventListener('change', () => {
-        localStorage.setItem(`habit_day_${day+1}`, checkbox.checked);
-        updateProgress();
+        card.appendChild(tarefaDiv);
+        pilaresContainer.appendChild(card);
       });
 
-      dayItem.appendChild(label);
-      dayItem.appendChild(checkbox);
-      weekDiv.appendChild(dayItem);
-    }
+      dayBlock.appendChild(pilaresContainer);
+      semanaConteudo.appendChild(dayBlock);
+    });
 
-    const weekProgressWrapper = document.createElement('div');
-    weekProgressWrapper.classList.add('progress-bar');
-    weekProgressWrapper.style.marginTop = '10px';
-
-    const weekProgressFill = document.createElement('div');
-    weekProgressFill.classList.add('progress-bar-fill');
-    weekProgressFill.id = `weekProgress-${weekNumber}`;
-
-    weekProgressWrapper.appendChild(weekProgressFill);
-    weekDiv.appendChild(weekProgressWrapper);
-
-    return weekDiv;
+    atualizarProgresso();
   }
 
-  for(let w = 1; w <= TOTAL_WEEKS; w++) {
-    weeksContainer.appendChild(createWeekHtml(w));
+  function atualizarProgresso() {
+    const dias = habitosPorSemana[semanaAtual];
+    let totalCheck = 0;
+    let totalItems = dias.length * 3; // 3 pilares por dia
+
+    for (let dayIndex = 0; dayIndex < dias.length; dayIndex++) {
+      ['corpo', 'mente', 'espirito'].forEach(pilar => {
+        const id = `chk-${semanaAtual}-${dayIndex + 1}-${pilar}`;
+        if (localStorage.getItem(id) === 'true') totalCheck++;
+      });
+    }
+    const percent = (totalCheck / totalItems) * 100;
+    document.getElementById('weekProgress').style.width = `${percent}%`;
   }
 
-  function updateProgress() {
-    let completedDays = 0;
-    for(let day = 1; day <= TOTAL_DAYS; day++) {
-      if(localStorage.getItem(`habit_day_${day}`) === 'true') {
-        completedDays++;
-      }
-    }
-    const overallPercent = (completedDays / TOTAL_DAYS) * 100;
-    document.getElementById('overallProgress').style.width = `${overallPercent}%`;
+  // Eventos dos botões semana
+  semanaBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      marcarSemanaAtiva(btn.id.replace('btn-', ''));
+      renderizarSemana();
+    });
+  });
 
-    for(let w = 1; w <= TOTAL_WEEKS; w++) {
-      let completedInWeek = 0;
-      const startDay = (w - 1) * DAYS_PER_WEEK + 1;
-      const endDay = startDay + DAYS_PER_WEEK - 1;
-      for(let day = startDay; day <= endDay; day++) {
-        if(localStorage.getItem(`habit_day_${day}`) === 'true') {
-          completedInWeek++;
-        }
-      }
-      const percentWeek = (completedInWeek / DAYS_PER_WEEK) * 100;
-      document.getElementById(`weekProgress-${w}`).style.width = `${percentWeek}%`;
-    }
-  }
+  // Inicialização
+  marcarSemanaAtiva('semana1');
+  renderizarSemana();
 
-  updateProgress();
+  // --- Cronômetro com sons ---
 
-  // Cronômetro
+  // Sons em base64 simples para não precisar de arquivos externos (som de clique start/pause e fim)
+  const somStartPause = new Audio("data:audio/wav;base64,UklGRjQAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YcAA...");
+  // Nota: substituir o base64 por um som real ou usar beep simples com Web Audio API
+  // Para fins deste código, deixo como placeholder
+
+  const somFim = new Audio("data:audio/wav;base64,UklGRiwAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YcAA...");
+
   const timerDisplay = document.getElementById('timer');
   const startBtn = document.getElementById('startBtn');
   const pauseBtn = document.getElementById('pauseBtn');
   const resetBtn = document.getElementById('resetBtn');
 
+  let tempoTotal = 330; // 5 min 30 seg em segundos
+  let tempoRestante = tempoTotal;
   let timerInterval = null;
-  let totalSeconds = 5 * 60 + 30; // 5 minutos e 30 segundos
+  let timerRodando = false;
 
-  function updateTimerDisplay() {
-    const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
-    const seconds = String(totalSeconds % 60).padStart(2, '0');
-    timerDisplay.textContent = `${minutes}:${seconds}`;
+  function formatarTempo(segundos) {
+    const min = Math.floor(segundos / 60).toString().padStart(2, '0');
+    const seg = (segundos % 60).toString().padStart(2, '0');
+    return `${min}:${seg}`;
   }
 
-  function startTimer() {
-    if (timerInterval) return;
-    playSound(beepShort);
+  function atualizarDisplay() {
+    timerDisplay.textContent = formatarTempo(tempoRestante);
+    if(tempoRestante === 0){
+      clearInterval(timerInterval);
+      timerRodando = false;
+      startBtn.disabled = false;
+      pauseBtn.disabled = true;
+      resetBtn.disabled = false;
+      timerDisplay.style.color = '#c62828'; // vermelho ao terminar
+      // Som de fim
+      somFim.play().catch(() => {});
+    }
+  }
+
+  function iniciarTimer() {
+    if (timerRodando) return;
+    timerRodando = true;
+    startBtn.disabled = true;
+    pauseBtn.disabled = false;
+    resetBtn.disabled = true;
+    timerDisplay.style.color = '#2e7d32';
+
+    // somStartPause.play().catch(() => {});
     timerInterval = setInterval(() => {
-      if (totalSeconds > 0) {
-        totalSeconds--;
-        updateTimerDisplay();
-      } else {
-        pauseTimer();
-        playSound(beepEnd);
-        alert('Tempo finalizado!');
+      tempoRestante--;
+      atualizarDisplay();
+      if (tempoRestante <= 0) {
+        clearInterval(timerInterval);
+        timerRodando = false;
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        resetBtn.disabled = false;
+        timerDisplay.style.color = '#c62828';
+        // somFim.play().catch(() => {});
       }
     }, 1000);
   }
 
-  function pauseTimer() {
-    if(timerInterval) {
-      playSound(beepShort);
-    }
+  function pausarTimer() {
+    if (!timerRodando) return;
+    timerRodando = false;
+    startBtn.disabled = false;
+    pauseBtn.disabled = true;
+    resetBtn.disabled = false;
     clearInterval(timerInterval);
-    timerInterval = null;
+    // somStartPause.play().catch(() => {});
   }
 
-  function resetTimer() {
-    playSound(beepShort);
-    pauseTimer();
-    totalSeconds = 5 * 60 + 30;
-    updateTimerDisplay();
+  function resetarTimer() {
+    tempoRestante = tempoTotal;
+    atualizarDisplay();
+    startBtn.disabled = false;
+    pauseBtn.disabled = true;
+    resetBtn.disabled = false;
+    timerDisplay.style.color = '#2e7d32';
+    clearInterval(timerInterval);
+    timerRodando = false;
   }
 
-  startBtn.addEventListener('click', startTimer);
-  pauseBtn.addEventListener('click', pauseTimer);
-  resetBtn.addEventListener('click', resetTimer);
+  startBtn.addEventListener('click', iniciarTimer);
+  pauseBtn.addEventListener('click', pausarTimer);
+  resetBtn.addEventListener('click', resetarTimer);
 
-  updateTimerDisplay();
+  atualizarDisplay();
+
 </script>
-
 </body>
 </html>
+
 
